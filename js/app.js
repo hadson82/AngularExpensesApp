@@ -62,7 +62,21 @@ app.factory('Expenses', function(){
   service.entries.forEach(function(element){
     element.date = myHelpers.stringToDateObj(element.date);
   });
+
+  service.getNewId= finction(){
+    if(service.newId){
+      service.newId++;
+      return service.newId;
+    }
+    else {
+      var entryMaxId = _.max(service.entries, function(entry){return entry.id;});
+      service.newId = entryMaxId.id+1;
+      return service.newId;
+    }
+  }
+
   service.save = function(entry) {
+    entry.id = service.getNewId();
     service.entries.push(entry);
   }
   return service;
