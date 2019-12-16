@@ -3,20 +3,20 @@ var app = angular.module('expensesApp', ['ngRoute']);
 app.config(['$routeProvider', function($routeProvider){
   $routeProvider
     .when('/', {
-      templateUrl : 'views/expenses.html',
-      controller : 'ExpensesViewController'
+      templateUrl: 'views/expenses.html',
+      controller: 'ExpensesViewController'
     })
     .when('/expenses', {
-      templateUrl : 'views/expenses.html',
-      controller : 'ExpensesViewController'
+      templateUrl: 'views/expenses.html',
+      controller: 'ExpensesViewController'
     })
     .when('/expenses/new', {
-      templateUrl : 'views/expenseForm.html',
-      controller : 'ExpensesViewController'
+      templateUrl: 'views/expenseForm.html',
+      controller: 'ExpensesViewController'
     })
     .when('/expenses/edit/:id', {
-      templateUrl : 'views/expenseForm.html',
-      controller : 'ExpensesViewController'
+      templateUrl: 'views/expenseForm.html',
+      controller: 'ExpensesViewController'
     })
     .otherwise({
       redirectTo: '/'
@@ -50,7 +50,6 @@ app.controller('ExpensesViewController', ['$scope', 'Expenses', function($scope,
   $scope.expenses = Expenses.entries;
 }]);
 
-//create or edit an expense
- app.controller('ExpenseViewController', ['$scope', '$routeParams','Expenses', function($scope, $routeParams, Expenses){
+ app.controller('ExpensesViewController', ['$scope', '$routeParams','Expenses', function($scope, $routeParams, Expenses){
    $scope.someText = 'The world is round. ID=' + $routeParams.id + ' ' + Expenses.entries[0].description;
  }]);
