@@ -14,6 +14,10 @@ app.config(function($routeProvider){
       templateUrl: 'views/expenseForm.html',
       controller: 'ExpensesViewController'
     })
+    .when('/expenses/edit/:id', {
+      templateUrl: 'views/expenseForm.html',
+      controller: 'ExpensesViewController'
+    })
     .otherwise({
       redirectTo: '/'
     });
@@ -33,4 +37,9 @@ app.controller('ExpensesViewController', ['$scope', function($scope){
     {description: 'bills', amount: 14, date: '2019-10-05'},
     {description: 'food', amount: 15, date: '2019-10-06'},
   ]
+}]);
+
+app.controller('ExpenseViewController', ['$scope', '$routeParams',
+ function($scope, $routeParams){
+  $scope.someText = 'The world is round. ID=' + $routeParams.id;
 }]);
