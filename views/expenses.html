@@ -10,7 +10,7 @@
         <span class="pull-left">${{expense.amount | number:2}}</span>{{expense.description | uppercase}}
 
 				<button type="button" class="btn btn-danger btn-s pull-right btn-separation-left"><span class="glyphicon glyphicon-trash"> </span></button>
-				<a href="" class="btn btn-primary btn-s pull-right"><span class="glyphicon glyphicon-pencil"></span></a>
+				<a href="#expenses/edit/{{expense.id}}" class="btn btn-primary btn-s pull-right"><span class="glyphicon glyphicon-pencil"></span></a>
       </li>
     </ul>
   </div>
