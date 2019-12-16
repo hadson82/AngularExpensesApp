@@ -1,4 +1,23 @@
-var app = angular.module('expensesApp', []);
+var app = angular.module('expensesApp', ['ngRoute']);
+
+app.config(function($routeProvider){
+  $routeProvider
+    .when('/', {
+      templateUrl: 'views/expenses.html',
+      controller: 'ExpensesViewController'
+    })
+    .when('/expenses', {
+      templateUrl: 'views/expenses.html',
+      controller: 'ExpensesViewController'
+    })
+    .when('/expenses/new', {
+      templateUrl: 'views/expenseForm.html',
+      controller: 'ExpensesViewController'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+});
 
 app.controller('HomeViewController', ['$scope', function($scope){
   $scope.appTitle = 'Simple Expenses Tracker';
