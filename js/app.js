@@ -12,11 +12,11 @@ app.config(['$routeProvider', function($routeProvider){
     })
     .when('/expenses/new', {
       templateUrl : 'views/expenseForm.html',
-      controller : 'ExpensesViewController'
+      controller : 'ExpenseViewController'
     })
     .when('/expenses/edit/:id', {
       templateUrl : 'views/expenseForm.html',
-      controller : 'ExpensesViewController'
+      controller : 'ExpenseViewController'
     })
     .otherwise({
       redirectTo: '/'
@@ -51,6 +51,14 @@ app.controller('ExpensesViewController', ['$scope', 'Expenses', function($scope,
 }]);
 
 //create or edit an expense
- app.controller('ExpenseViewController', ['$scope', '$routeParams','Expenses', function($scope, $routeParams, Expenses){
-   $scope.someText = 'The world is round. ID=' + $routeParams.id + ' ' + Expenses.entries[0].description;
+ app.controller('ExpenseViewController', ['$scope', '$routeParams', '$location', 'Expenses', function($scope, $routeParams, $location, Expenses){
+   if(!$routeParams.id){
+     $scope.expense = {id: 7, description: 'something', amount: 10, date: new Date()};
+   }
+
+   $scope.save = function(){
+     Expenses.save($scope.expense);
+     $location.path('/');
+   }
+
  }]);
