@@ -51,12 +51,12 @@ app.controller('HomeViewController', ['$scope', function($scope){
 app.factory('Expenses', function(){
   var service = {};
   service.entries = [
-    {description: 'food', amount: 10, date: '2019-10-01'},
-    {description: 'tickets', amount: 11, date: '2019-10-02'},
-    {description: 'food', amount: 12, date: '2019-10-03'},
-    {description: 'phone credit', amount: 13, date: '2019-10-04'},
-    {description: 'bills', amount: 14, date: '2019-10-05'},
-    {description: 'food', amount: 15, date: '2019-10-06'},
+    {id: 1, description: 'food', amount: 10, date: '2019-10-01'},
+    {id: 2, description: 'tickets', amount: 11, date: '2019-10-02'},
+    {id: 3, description: 'food', amount: 12, date: '2019-10-03'},
+    {id: 4, description: 'phone credit', amount: 13, date: '2019-10-04'},
+    {id: 5, description: 'bills', amount: 14, date: '2019-10-05'},
+    {id: 6, description: 'food', amount: 15, date: '2019-10-06'},
   ];
   //convert strings to date objects
   service.entries.forEach(function(element){
@@ -69,20 +69,33 @@ app.factory('Expenses', function(){
       return service.newId;
     }
     else {
-      var entryMaxId = _.max(service.entries, function(entry){return entry.id;});
-      service.newId = entryMaxId.id+1;
+      var entryMaxId = _.max(service.entries, function(entry){return entry.id});
+      service.newId = entryMaxId.id + 1;
       return service.newId;
     }
   }
 
   service.getById = function(id){
-    return _.find(service.entries, function(entry){return entry.id == id;})
+    return _.find(service.entries, function(entry){return entry.id == id});
   }
 
+  //update an entry
   service.save = function(entry) {
+    //find element we want to update
+   var toUpdate = service.getById(entry.id);
+
+   //if exists we update
+   if(toUpdate) {
+     //we'll copy all the properties from "entry" to the object we want to update
+     //documentation for _.extend: http://underscorejs.org/#extend
+     _.extend(toUpdate, entry);
+   }
+   //otherwise we create it
+   else {  
     entry.id = service.getNewId();
     service.entries.push(entry);
   }
+}
   return service;
 });
 
@@ -94,10 +107,13 @@ app.controller('ExpensesViewController', ['$scope', 'Expenses', function($scope,
 //create or edit an expense
  app.controller('ExpenseViewController', ['$scope', '$routeParams', '$location', 'Expenses', function($scope, $routeParams, $location, Expenses){
    if(!$routeParams.id){
-     $scope.expense = {id: 7, description: 'something', amount: 10, date: new Date()};
+     $scope.expense = {date: new Date()}
+   }
+   else {
+     $scope.expense = _.clone(Expenses.getById($routeParams.id));
    }
 
-   $scope.save = function(){
+   $scope.save = function() {
      Expenses.save($scope.expense);
      $location.path('/');
    }
