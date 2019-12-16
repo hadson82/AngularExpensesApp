@@ -48,7 +48,7 @@ app.controller('HomeViewController', ['$scope', function($scope){
 
 }]);
 
-app.factory('Expenses', function(){
+app.factory('Expenses', function() {
   var service = {};
   service.entries = [
     {id: 1, description: 'food', amount: 10, date: '2019-10-01'},
@@ -96,18 +96,34 @@ app.factory('Expenses', function(){
     service.entries.push(entry);
   }
 }
+
+  service.remove = function(entry){
+    service.entries = _.reject(service.entries, function(element){
+      return element.id == entry.id
+    });
+  }
+
+
   return service;
 });
 
 // listing of all expenses
-app.controller('ExpensesViewController', ['$scope', 'Expenses', function($scope, Expenses){
+app.controller('ExpensesViewController', ['$scope', 'Expenses', function($scope, Expenses) {
   $scope.expenses = Expenses.entries;
+
+  $scope.remove = function(expense) {
+    Expenses.remove(expense);
+  };
+
+  $scope.$watch(function () { return Expenses.entries; }, function (entries) {
+      $scope.expenses = entries;
+    });
 }]);
 
 //create or edit an expense
- app.controller('ExpenseViewController', ['$scope', '$routeParams', '$location', 'Expenses', function($scope, $routeParams, $location, Expenses){
-   if(!$routeParams.id){
-     $scope.expense = {date: new Date()}
+ app.controller('ExpenseViewController', ['$scope', '$routeParams', '$location', 'Expenses', function($scope, $routeParams, $location, Expenses) {
+   if(!$routeParams.id) {
+     $scope.expense = {date: new Date()};
    }
    else {
      $scope.expense = _.clone(Expenses.getById($routeParams.id));
@@ -116,6 +132,6 @@ app.controller('ExpensesViewController', ['$scope', 'Expenses', function($scope,
    $scope.save = function() {
      Expenses.save($scope.expense);
      $location.path('/');
-   }
+   };
 
  }]);
