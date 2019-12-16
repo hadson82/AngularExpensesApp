@@ -1,6 +1,6 @@
 var app = angular.module('expensesApp', ['ngRoute']);
 
-app.config('$routeProvider', function($routeProvider){
+app.config(['$routeProvider', function($routeProvider){
   $routeProvider
     .when('/', {
       templateUrl: 'views/expenses.html',
@@ -21,7 +21,7 @@ app.config('$routeProvider', function($routeProvider){
     .otherwise({
       redirectTo: '/'
     });
-});
+}]);
 
 app.controller('HomeViewController', ['$scope', function($scope){
   $scope.appTitle = 'Simple Expenses Tracker';
@@ -41,7 +41,7 @@ app.factory('Expenses', function(){
   return service;
 });
 
-app.controller('ExpensesViewController', ['$scope', 'Expenses', function($scope){
+app.controller('ExpensesViewController', ['$scope', 'Expenses', function($scope, Expenses){
   $scope.expenses = Expenses.entries;
 }]);
 
