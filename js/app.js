@@ -45,7 +45,7 @@ app.controller('ExpensesViewController', ['$scope', 'Expenses', function($scope,
   $scope.expenses = Expenses.entries;
 }]);
 
-// app.controller('ExpenseViewController', ['$scope', '$routeParams',
-//  function($scope, $routeParams){
-//   $scope.someText = 'The world is round. ID=' + $routeParams.id;
-// }]);
+ app.controller('ExpensesViewController', ['$scope', '$routeParams','Expenses',
+  function($scope, $routeParams, Expenses){
+   $scope.someText = 'The world is round. ID=' + $routeParams.id + ' ' + Expenses.entries[0].description;
+ }]);
