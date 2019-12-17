@@ -135,3 +135,10 @@ app.controller('ExpensesViewController', ['$scope', 'Expenses', function($scope,
    };
 
  }]);
+
+ app.directive('zvaExpense', function(){
+   return {
+     restrict: 'E',
+     templateUrl: 'views/expense.html'
+   }
+ });
